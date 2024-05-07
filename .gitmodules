@@ -1,3 +1,0 @@
-[submodule "legged_gym/envs/CustomEnvironments"]
-	path = legged_gym/envs/CustomEnvironments
-	url = git@github.com:ZzzzzzS/IsaacgymExperiments.git
