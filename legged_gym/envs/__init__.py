@@ -55,3 +55,30 @@ task_registry.register("a1", LeggedRobot, A1RoughCfg(), A1RoughCfgPPO())
 task_registry.register("cassie", Cassie, CassieRoughCfg(), CassieRoughCfgPPO())
 task_registry.register("cartpole2", Cartpole2Task, Cartpole2Config(), Cartpole2ConfigPPO())
 task_registry.register("pf2", Pf2Env, Pf2Cfg(), Pf2CfgPPO())
+
+robot_type = os.getenv("ROBOT_TYPE")
+print(robot_type, "in env __init__")
+# Check if the ROBOT_TYPE environment variable is set, otherwise exit with an error
+if not robot_type:
+    print("Error: Please set the ROBOT_TYPE using 'export ROBOT_TYPE=<robot_type>' if using limx environment.")
+    robot_type = "PF_TRON1A"
+
+if robot_type.startswith("PF"):
+    from .limx_tron1.PF.pointfoot import PointFoot
+    from legged_gym.envs.limx_tron1.mixed_terrain.pointfoot_rough_config import PointFootRoughCfg, PointFootRoughCfgPPO
+    from legged_gym.envs.limx_tron1.flat.PF.pointfoot_flat_config import PointFootFlatCfg, PointFootFlatCfgPPO
+
+    task_registry.register("pointfoot_rough", PointFoot, PointFootRoughCfg(), PointFootRoughCfgPPO())
+    task_registry.register("pointfoot_flat", PointFoot, PointFootFlatCfg(), PointFootFlatCfgPPO())
+elif robot_type.startswith("WF"):
+    from .limx_tron1.WF.pointfoot import PointFoot
+    from legged_gym.envs.limx_tron1.mixed_terrain.pointfoot_rough_config import PointFootRoughCfg, PointFootRoughCfgPPO
+    from legged_gym.envs.limx_tron1.flat.WF.pointfoot_flat_config import PointFootFlatCfg, PointFootFlatCfgPPO
+
+    task_registry.register("pointfoot_flat", PointFoot, PointFootFlatCfg(), PointFootFlatCfgPPO())
+elif robot_type.startswith("SF"):
+    from .limx_tron1.SF.pointfoot import PointFoot
+    from legged_gym.envs.limx_tron1.mixed_terrain.pointfoot_rough_config import PointFootRoughCfg, PointFootRoughCfgPPO
+    from legged_gym.envs.limx_tron1.flat.SF.pointfoot_flat_config import PointFootFlatCfg, PointFootFlatCfgPPO
+
+    task_registry.register("pointfoot_flat", PointFoot, PointFootFlatCfg(), PointFootFlatCfgPPO())

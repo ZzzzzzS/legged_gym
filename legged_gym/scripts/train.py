@@ -75,9 +75,9 @@ def train(args):
     ppo_runner, train_cfg = task_registry.make_alg_runner(
         env=env, name=args.task, args=args, train_cfg=train_cfg, log_root=logdir
     )
-    exp_msg["env_cfg"] = class_to_dict(env_cfg)
-    exp_msg["train_cfg"] = class_to_dict(train_cfg)
-    ExperimentLogger.save_hyper_params(logdir, env_cfg, train_cfg)
+    # exp_msg["env_cfg"] = class_to_dict(env_cfg)
+    # exp_msg["train_cfg"] = class_to_dict(train_cfg)
+    # ExperimentLogger.save_hyper_params(logdir, env_cfg, train_cfg)
 
     if args.backup_env:
         cp_env(env, ppo_runner.log_dir)
