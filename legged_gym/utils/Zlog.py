@@ -37,6 +37,9 @@ class zzs_basic_graph_logger:
             "base_vel_yaw": np.zeros((self.max_episode_length, self.num_agents)),
             "contact_forces_z": np.zeros((self.max_episode_length, self.num_agents, 2)),
             "base_height": np.zeros((self.max_episode_length, self.num_agents)),
+            "base_angle_x": np.zeros((self.max_episode_length, self.num_agents)),
+            "base_angle_y": np.zeros((self.max_episode_length, self.num_agents)),
+            "base_angle_z": np.zeros((self.max_episode_length, self.num_agents)),
         }
         self.buffer_idx = 0
 
@@ -83,6 +86,7 @@ class zzs_basic_graph_logger:
             a.set(xlabel="time [s]", ylabel="Position [rad]", title=f"DOF Position {self.dof_names[i]}")
             a.legend()
             a = axs[i, 1]
+            a.plot(time, self.buffer["dof_pos_target"][:, robot_index, i], label="target")
             a.plot(time, self.buffer["dof_vel"][:, robot_index, i], label="measured")
             a.set(xlabel="time [s]", ylabel="Velocity [rad/s]", title=f"Joint Velocity {self.dof_names[i]}")
             a.legend()
@@ -92,7 +96,7 @@ class zzs_basic_graph_logger:
             a.legend()
 
     def __plot_info(self, robot_index):
-        nb_rows = 2
+        nb_rows = 3
         nb_cols = 3
         fig, axs = plt.subplots(nb_rows, nb_cols)
         fig.suptitle(f"Robot {robot_index} info")
@@ -131,6 +135,18 @@ class zzs_basic_graph_logger:
         a = axs[1, 2]
         a.plot(time, self.buffer["base_height"][:, robot_index], label="measured")
         a.set(xlabel="time [s]", ylabel="height [m]", title="Base height")
+        a.legend()
+        a = axs[2, 0]
+        a.plot(time, self.buffer["base_angle_x"][:, robot_index], label="measured")
+        a.set(xlabel="time [s]", ylabel="angle [rad]", title="base_angle_x")
+        a.legend()
+        a = axs[2, 1]
+        a.plot(time, self.buffer["base_angle_y"][:, robot_index], label="measured")
+        a.set(xlabel="time [s]", ylabel="angle [rad]", title="base_angle_y")
+        a.legend()
+        a = axs[2, 2]
+        a.plot(time, self.buffer["base_angle_z"][:, robot_index], label="measured")
+        a.set(xlabel="time [s]", ylabel="angle [rad]", title="base_angle_z")
         a.legend()
 
     def _plot(self):

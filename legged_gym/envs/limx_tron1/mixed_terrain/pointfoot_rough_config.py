@@ -5,14 +5,14 @@ class PointFootRoughCfg(BaseConfig):
     class env:
         num_envs = 8192
         num_propriceptive_obs = 27
-        num_privileged_obs = 148  # if not None a priviledge_obs_buf will be returned by step() (critic obs for assymetric training). None is returned otherwise
+        num_privileged_obs = 27  # if not None a priviledge_obs_buf will be returned by step() (critic obs for assymetric training). None is returned otherwise
         num_actions = 6
         env_spacing = 3.0  # not used with heightfields/trimeshes
         send_timeouts = True  # send time out information to the algorithm
         episode_length_s = 20  # episode length in seconds
 
     class terrain:
-        mesh_type = "trimesh"  # "heightfield" # none, plane, heightfield or trimesh
+        mesh_type = "plane"  # "heightfield" # none, plane, heightfield or trimesh
         horizontal_scale = 0.1  # [m]
         vertical_scale = 0.005  # [m]
         border_size = 25  # [m]
@@ -22,7 +22,7 @@ class PointFootRoughCfg(BaseConfig):
         restitution = 0.8
         # rough terrain only:
         measure_heights_actor = False
-        measure_heights_critic = True
+        measure_heights_critic = False
         measured_points_x = [
             -0.5,
             -0.4,
@@ -52,14 +52,14 @@ class PointFootRoughCfg(BaseConfig):
     class commands:
         curriculum = False
         max_curriculum = 1.0
-        num_commands = 4  # default: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
-        resampling_time = 10.0  # time before command are changed[s]
-        heading_command = True  # if true: compute ang vel command from heading error
+        num_commands = 3  # default: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
+        resampling_time = 4.0  # time before command are changed[s]
+        heading_command = False  # if true: compute ang vel command from heading error
 
         class ranges:
             lin_vel_x = [-1.0, 1.0]  # min max [m/s]
             lin_vel_y = [-0.2, 0.2]  # min max [m/s]
-            ang_vel_yaw = [-1, 1]  # min max [rad/s]
+            ang_vel_yaw = [-0.5, 0.5]  # min max [rad/s]
             heading = [-3.14, 3.14]
 
     class init_state:
@@ -142,7 +142,7 @@ class PointFootRoughCfg(BaseConfig):
 
     class domain_rand:
         randomize_friction = True
-        friction_range = [0.0, 1.6]
+        friction_range = [0.3, 1.6]
         randomize_base_mass = True
         added_mass_range = [-1.0, 2.0]
         randomize_base_com = True
@@ -155,12 +155,12 @@ class PointFootRoughCfg(BaseConfig):
         class scales:
             action_rate = -0.01
             ang_vel_xy = -0.05
-            base_height = -10.0
+            base_height = -20.0
             collision = -50.0
             dof_acc = -2.5e-07
             dof_pos_limits = -0.0
             dof_vel = -0.0
-            feet_air_time = 60
+            feet_air_time = 5.0
             feet_contact_forces = -0.01
             feet_stumble = -0.0
             lin_vel_z = -0.5
@@ -181,12 +181,12 @@ class PointFootRoughCfg(BaseConfig):
         soft_dof_pos_limit = 0.95  # percentage of urdf limits, values above this limit are penalized
         soft_dof_vel_limit = 0.9
         soft_torque_limit = 0.8
-        max_contact_force = 200.0  # forces above this value are penalized
+        max_contact_force = 350.0  # forces above this value are penalized
         only_positive_rewards = (
             False  # if true negative total rewards are clipped at zero (avoids early termination problems)
         )
         min_feet_distance = 0.1
-        min_feet_air_time = 0.25
+        min_feet_air_time = 0.4
         max_feet_air_time = 0.65
         tracking_sigma = 0.25  # tracking reward = exp(-error^2/sigma)
 

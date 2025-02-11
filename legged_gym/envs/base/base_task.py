@@ -262,6 +262,9 @@ class BaseTask:
                     "base_vel_yaw": self.base_ang_vel[robot_index, 2].detach().cpu().numpy(),
                     "contact_forces_z": self.contact_forces[robot_index, self.feet_indices, 2].cpu().numpy(),
                     "base_height": measured_height.detach().cpu().numpy(),
+                    "base_angle_x": self.base_euler_xyz[robot_index, 0].detach().cpu().numpy(),
+                    "base_angle_y": self.base_euler_xyz[robot_index, 1].detach().cpu().numpy(),
+                    "base_angle_z": self.base_euler_xyz[robot_index, 2].detach().cpu().numpy(),
                 }
             )
         elif self.action_test_countdown == 0:

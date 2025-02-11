@@ -28,7 +28,7 @@ def generate_logdir(experiment_name: str):
 def commit_experiment(logdir: dict, tsk_arg=None):
     mkdir(logdir["log_dir"])
     filename = os.path.join(logdir["log_dir"], "commit.txt")
-    #commit_msg = input("Enter commit message: ")
+    # commit_msg = input("Enter commit message: ")
     commit_msg = "zzs_legged_gym"
     pri_commit_msg = ""
     if tsk_arg is not None:

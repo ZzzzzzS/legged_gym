@@ -79,7 +79,7 @@ def play(args):
         print("Exported policy as jit script to: ", path)
 
     stop_state_log = 300  # number of steps before plotting states
-    robot_index = [0]  # which robot is used for logging
+    robot_index = [0, 3]  # which robot is used for logging
     joint_index = 0  # which joint is used for logging
 
     if USE_ZZS_LOGGER:
@@ -146,6 +146,9 @@ def play(args):
                         "base_vel_yaw": env.base_ang_vel[robot_index, 2].detach().cpu().numpy(),
                         "contact_forces_z": env.contact_forces[robot_index, env.feet_indices, 2].cpu().numpy(),
                         "base_height": measured_height.detach().cpu().numpy(),
+                        # "base_angle_x": env.base_euler_xyz[robot_index, 0].detach().cpu().numpy(),
+                        # "base_angle_y": env.base_euler_xyz[robot_index, 1].detach().cpu().numpy(),
+                        # "base_angle_z": env.base_euler_xyz[robot_index, 2].detach().cpu().numpy(),
                     }
                 )
             else:

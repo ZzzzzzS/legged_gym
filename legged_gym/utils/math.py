@@ -31,7 +31,7 @@
 import torch
 from torch import Tensor
 import numpy as np
-from isaacgym.torch_utils import quat_apply, normalize, quat_rotate_inverse, quat_rotate
+from isaacgym.torch_utils import quat_apply, normalize, quat_rotate_inverse, quat_rotate, get_euler_xyz
 from typing import Tuple
 
 
@@ -81,3 +81,11 @@ def torch_rand_sqrt_float(lower, upper, shape, device):
     r = torch.where(r < 0.0, -torch.sqrt(-r), torch.sqrt(r))
     r = (r + 1.0) / 2.0
     return (upper - lower) * r + lower
+
+
+def get_euler_xyz_tensor(quat):
+    r, p, w = get_euler_xyz(quat)
+    # stack r, p, w in dim1
+    euler_xyz = torch.stack((r, p, w), dim=1)
+    euler_xyz[euler_xyz > np.pi] -= 2 * np.pi
+    return euler_xyz

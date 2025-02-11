@@ -160,10 +160,20 @@ class ActorCritic(nn.Module):
         self.std.data = current_std
         self.std.data.requires_grad_(True)
 
-    def export_traced_model(self, path):
+    def export_traced_model(self, path, onnx_path=None):
         obs = torch.zeros(self.mlp_input_dim_a)
         traced_script_module = torch.jit.trace(self.actor, obs)
         traced_script_module.save(path)
+        example = torch.ones((1, self.mlp_input_dim_a)).to("cpu")
+        torch.onnx.export(
+            model=self.actor,
+            args=example,
+            f=onnx_path,
+            verbose=False,
+            input_names=["observation"],
+            output_names=["action"],
+            opset_version=17,
+        )
 
 
 def get_activation(act_name):
