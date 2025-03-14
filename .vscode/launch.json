@@ -12,12 +12,15 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": [
-                "--task=LimxMine", //set task name
-                "--load_run=Jan21_16-47-28", //set policy to load
+                "--task=BITwheelfoot", //set task name
+                "--load_run=Mar12_23-46-27", //set policy to load
                 //NOTE: please set the checkpint according to the policy you want to load
                 "--num_envs=50", //set number of environments,
-                //"--checkpoint=4500"
-            ]
+                //"--checkpoint=10000"
+            ],
+            "env": {
+                "ROBOT_TYPE": "PF_TRON1A"
+            }
         },
         {
             "name": "train",
@@ -27,17 +30,20 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": [
-                "--task=LimxMine", //set task name
+                "--task=BITwheelfoot", //set task name
                 //"--launch_tensorboard",
                 //"--headless" //uncomment to run without rendering
-                "--load_run=Jan21_14-53-06", //set pre-trained policy to load
-                "--resume", //set if resume training
+                "--load_run=Mar11_13-31-54", //set pre-trained policy to load
+                //"--resume", //set if resume training
                 "--max_iterations=20000",
                 "--backup_env",
-                "--checkpoint=4000"
+                //"--checkpoint=4000"
                 //"--num_envs=2048"
                 //NOTE: for more options, please refer to the get_args() funtion in legged_gym/utils/helper.py
             ],
+            "env": {
+                "ROBOT_TYPE": "WF_TRON1A"
+            }
         },
         {
             // launch current file
