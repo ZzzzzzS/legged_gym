@@ -36,6 +36,36 @@ from torch.distributions import Normal
 from torch.nn.modules import rnn
 
 
+class FullyConnectedNetwork(nn.Module):
+    def __init__(self,model):
+        super(FullyConnectedNetwork,self).__init__()
+        self.model=model
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        base_ang_vel = x[:,3:6]
+        projected_gravity = x[:,6:9]
+        left_leg = x[:,12:15]
+        right_leg = x[:,16:19]
+        joint_vel = x[:,20:28]
+        action = x[:,28:36]
+        cmd = x[:,9:12]
+        
+        dummy_input = torch.cat(
+            (
+                base_ang_vel,
+                projected_gravity,
+                left_leg,
+                right_leg,
+                joint_vel,
+                action,
+                cmd
+            ),
+            dim=1
+        )
+        y = self.model(dummy_input)
+        
+        return y
+
 class ActorCritic(nn.Module):
     is_recurrent = False
 
@@ -174,6 +204,18 @@ class ActorCritic(nn.Module):
             output_names=["action"],
             opset_version=17,
         )
+    # def export_traced_model(self,path,onnx_path=None):
+    #     outer_model = FullyConnectedNetwork(self.actor)
+    #     example = torch.ones((1,36)).to("cpu")
+    #     torch.onnx.export(
+    #         model=outer_model,
+    #         args=example,
+    #         f=onnx_path,
+    #         verbose=False,
+    #         input_names=["observation"],
+    #         output_names=["action"],
+    #         opset_version=17,
+    #     )
 
 
 def get_activation(act_name):

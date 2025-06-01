@@ -323,18 +323,14 @@ def export_policy_as_jit(actor_critic, path):
         # TODO: add trace support for LSTM
     else:
         os.makedirs(path, exist_ok=True)
-        path1 = os.path.join(path, "policy_1.pt")
-        model = copy.deepcopy(actor_critic.actor).to("cpu")
-        traced_script_module = torch.jit.script(model)
-        traced_script_module.save(path1)
-
-        example = torch.ones((1, actor_critic.mlp_input_dim_a)).to("cpu")
+        
         path2 = os.path.join(path, "policy_1_traced.pt")
         path3 = os.path.join(path, "policy_1.onnx")
         model_trace = copy.deepcopy(actor_critic).to("cpu")
         if hasattr(model_trace, "export_traced_model"):
             model_trace.export_traced_model(path2, path3)
         else:
+            example = torch.ones((1, actor_critic.mlp_input_dim_a)).to("cpu")
             traced_script_module2 = torch.jit.trace(model_trace, example)  # FIXME: fix standalone critic model
             traced_script_module2.save(path2)
             # export to ONNX
