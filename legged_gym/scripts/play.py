@@ -56,7 +56,7 @@ def play(args):
     env_cfg.terrain.curriculum = False
     env_cfg.noise.add_noise = False
     env_cfg.domain_rand.randomize_friction = False
-    env_cfg.domain_rand.push_robots = False
+    env_cfg.domain_rand.push_robots = False 
     env_cfg.domain_rand.push_interval_s = 3.0
     # prepare environment
     env, _ = task_registry.make_env(name=args.task, args=args, env_cfg=env_cfg)
@@ -184,7 +184,7 @@ def play(args):
 
 if __name__ == "__main__":
     EXPORT_POLICY = True
-    RECORD_FRAMES = True
+    RECORD_FRAMES = False
     MOVE_CAMERA = False
     USE_ZZS_LOGGER = True
     args = get_args()

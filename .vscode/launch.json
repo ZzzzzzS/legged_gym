@@ -12,11 +12,12 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "args": [
-                "--task=LimxWheelArmed2", //set task name
-                "--load_run=Jun01_20-17-25", //set policy to load
+                "--task=OwheelNT_FM", //set task name
+                "--load_run=Aug01_18-55-23", //set policy to load
                 //NOTE: please set the checkpint according to the policy you want to load
                 "--num_envs=50", //set number of environments,
-                //"--checkpoint=10000"
+                //"--checkpoint=300"
+                //"--checkpoint=20000"
             ],
             "env": {
                 "ROBOT_TYPE": "WF_TRON1A"
@@ -33,9 +34,9 @@
                 "--task=OwheelNT_FM", //set task name
                 //"--launch_tensorboard",
                 //"--headless", //uncomment to run without rendering
-                "--load_run=May14_17-25-33", //set pre-trained policy to load
-                //"--resume", //set if resume training
-                "--max_iterations=5000",
+                "--load_run=Jul25_15-32-34", //set pre-trained policy to load
+                "--resume", //set if resume training
+                "--max_iterations=8000",
                 "--backup_env",
                 //"--checkpoint=4000"
                 //NOTE: for more options, please refer to the get_args() funtion in legged_gym/utils/helper.py
@@ -55,9 +56,9 @@
                 "--task=LimxWheelArmed2", //set task name
                 //"--launch_tensorboard",
                 //"--headless", //uncomment to run without rendering
-                "--load_run=Jun01_20-17-25", //set pre-trained policy to load
-                "--resume", //set if resume training
-                "--max_iterations=5000",
+                "--load_run=Jun23_22-46-04", //set pre-trained policy to load
+                //"--resume", //set if resume training
+                "--max_iterations=80000",
                 "--backup_env",
                 //"--checkpoint=4000"
                 //"--num_envs=2048"
